@@ -10,8 +10,7 @@ import android.view.MenuItem;
 
 import io.humbledude.taskdriven.tasks.PublicIpTask;
 import io.humbledude.taskdriven.tasks.SnackBarTask;
-import io.humbledude.taskdriven.taskbase.TaskBase;
-import io.humbledude.taskdriven.taskbase.Threads;
+import io.humbledude.taskdriven.tasks.TaskBase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,16 +25,17 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+
                 new PublicIpTask()
                     .onFinish(new TaskBase.Consumer<String>() {
                         @Override
                         public void accept(String ip) {
                             if (ip != null) {
-                                new SnackBarTask(view, ip).runOn(Threads.MAIN_LOOPER);
+                                new SnackBarTask(view, ip).runOn(TaskBase.MAIN_LOOPER);
                             }
                         }
                     })
-                    .runOn(Threads.WORKER_LOOPER);
+                    .runOn(TaskBase.WORKER_LOOPER);
             }
         });
     }

@@ -5,8 +5,6 @@ import android.view.View;
 
 import java.util.concurrent.Callable;
 
-import io.humbledude.taskdriven.taskbase.TaskBase;
-
 /**
  * Created by keunhui.park on 2018. 4. 26..
  */
