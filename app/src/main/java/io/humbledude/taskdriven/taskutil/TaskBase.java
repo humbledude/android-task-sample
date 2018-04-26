@@ -9,35 +9,32 @@ import java.util.concurrent.Callable;
  * Created by keunhui.park on 2018. 4. 26..
  */
 
-public class Task<O> {
+public class TaskBase<O> {
 
-    private Handler mHandler;
-    private Callable<O> mCallable;
+    private Runnable mRunnable;
     private Consumer<O> mOnFinishAction;
 
-    public Task(Callable<O> callable, Looper looper) {
-        mHandler = new Handler(looper);
-        mCallable = callable;
-    }
-
-    public Task run() {
-        mHandler.post(new Runnable() {
+    public TaskBase(final Callable<O> callable) {
+        mRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    O result = mCallable.call();
+                    O result = callable.call();
                     if (mOnFinishAction != null) {
-                       mOnFinishAction.accept(result);
+                        mOnFinishAction.accept(result);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
-        return this;
+        };
     }
 
-    public Task onFinish(Consumer<O> consumer) {
+    public void runOn(Looper looper) {
+        new Handler(looper).post(mRunnable);
+    }
+
+    public TaskBase onFinish(Consumer<O> consumer) {
         mOnFinishAction = consumer;
         return this;
     }

@@ -10,14 +10,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.Callable;
 
-import io.humbledude.taskdriven.taskutil.Threads;
-import io.humbledude.taskdriven.taskutil.Task;
+import io.humbledude.taskdriven.taskutil.TaskBase;
 
 /**
  * Created by keunhui.park on 2018. 4. 26..
  */
 
-public class PublicIpTask extends Task<String> {
+public class PublicIpTask extends TaskBase<String> {
 
     public PublicIpTask() {
         super(new Callable<String>() {
@@ -41,7 +40,7 @@ public class PublicIpTask extends Task<String> {
                 }
                 return null;
             }
-        }, Threads.WORKER_LOOPER);
+        });
     }
 
 }

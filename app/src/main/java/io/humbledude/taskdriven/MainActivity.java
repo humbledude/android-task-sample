@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.humbledude.taskdriven.taskutil.Task;
+import io.humbledude.taskdriven.taskutil.TaskBase;
+import io.humbledude.taskdriven.taskutil.Threads;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,15 +27,15 @@ public class MainActivity extends AppCompatActivity {
                 final View view1 = view;
 
                 new PublicIpTask()
-                    .onFinish(new Task.Consumer<String>() {
+                    .onFinish(new TaskBase.Consumer<String>() {
                         @Override
                         public void accept(String ip) {
                             if (ip != null) {
-                                new SnackBarTask(view1, ip).run();
+                                new SnackBarTask(view1, ip).runOn(Threads.MAIN_LOOPER);
                             }
                         }
                     })
-                    .run();
+                    .runOn(Threads.WORKER_LOOPER);
             }
         });
     }

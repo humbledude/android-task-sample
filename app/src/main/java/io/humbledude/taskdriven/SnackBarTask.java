@@ -5,14 +5,13 @@ import android.view.View;
 
 import java.util.concurrent.Callable;
 
-import io.humbledude.taskdriven.taskutil.Threads;
-import io.humbledude.taskdriven.taskutil.Task;
+import io.humbledude.taskdriven.taskutil.TaskBase;
 
 /**
  * Created by keunhui.park on 2018. 4. 26..
  */
 
-public class SnackBarTask extends Task {
+public class SnackBarTask extends TaskBase {
     public SnackBarTask(final View view, final String ip) {
         super(
             new Callable<Void>() {
@@ -22,7 +21,6 @@ public class SnackBarTask extends Task {
                         .setAction("Action", null).show();
                     return null;
                 }
-            },
-            Threads.MAIN_LOOPER);
+            });
     }
 }
