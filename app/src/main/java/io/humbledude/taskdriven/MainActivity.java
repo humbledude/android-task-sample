@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.humbledude.taskdriven.taskutil.TaskBase;
-import io.humbledude.taskdriven.taskutil.Threads;
+import io.humbledude.taskdriven.tasks.PublicIpTask;
+import io.humbledude.taskdriven.tasks.SnackBarTask;
+import io.humbledude.taskdriven.taskbase.TaskBase;
+import io.humbledude.taskdriven.taskbase.Threads;
 
 public class MainActivity extends AppCompatActivity {
 

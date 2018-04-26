@@ -1,11 +1,11 @@
-package io.humbledude.taskdriven;
+package io.humbledude.taskdriven.tasks;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import java.util.concurrent.Callable;
 
-import io.humbledude.taskdriven.taskutil.TaskBase;
+import io.humbledude.taskdriven.taskbase.TaskBase;
 
 /**
  * Created by keunhui.park on 2018. 4. 26..
