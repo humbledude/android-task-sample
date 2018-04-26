@@ -27,15 +27,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(final View view) {
 
                 new PublicIpTask()
-                    .onFinish(new TaskBase.Consumer<String>() {
+                    .runOn(TaskBase.WORKER_LOOPER)
+                    .onFinish(new TaskBase.Callback<String>() {
                         @Override
-                        public void accept(String ip) {
+                        public void onFinish(String ip) {
                             if (ip != null) {
-                                new SnackBarTask(view, ip).runOn(TaskBase.MAIN_LOOPER);
+                                new SnackBarTask(view, ip)
+                                    .runOn(TaskBase.MAIN_LOOPER)
+                                    .runNow();
                             }
                         }
                     })
-                    .runOn(TaskBase.WORKER_LOOPER);
+                    .runNow();
+
             }
         });
     }

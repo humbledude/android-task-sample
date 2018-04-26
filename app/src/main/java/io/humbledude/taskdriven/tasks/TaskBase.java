@@ -21,8 +21,9 @@ public class TaskBase<O> {
         WORKER_LOOPER = worker.getLooper();
     }
 
+    private Handler mHandler;
     private Runnable mRunnable;
-    private Consumer<O> mOnFinishAction;
+    private Callback<O> mOnFinishCallback;
 
     public TaskBase(final Callable<O> callable) {
         mRunnable = new Runnable() {
@@ -30,8 +31,8 @@ public class TaskBase<O> {
             public void run() {
                 try {
                     O result = callable.call();
-                    if (mOnFinishAction != null) {
-                        mOnFinishAction.accept(result);
+                    if (mOnFinishCallback != null) {
+                        mOnFinishCallback.onFinish(result);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -40,17 +41,22 @@ public class TaskBase<O> {
         };
     }
 
-    public void runOn(Looper looper) {
-        new Handler(looper).post(mRunnable);
-    }
-
-    public TaskBase onFinish(Consumer<O> consumer) {
-        mOnFinishAction = consumer;
+    public TaskBase<O> runOn(Looper looper) {
+        mHandler = new Handler(looper);
         return this;
     }
 
-    public interface Consumer<T> {
-        void accept(T t);
+    public void runNow() {
+        mHandler.post(mRunnable);
+    }
+
+    public TaskBase onFinish(Callback<O> callback) {
+        mOnFinishCallback = callback;
+        return this;
+    }
+
+    public interface Callback<T> {
+        void onFinish(T t);
     }
 
 }
