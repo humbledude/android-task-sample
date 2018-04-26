@@ -23,15 +23,13 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                final View view1 = view;
-
+            public void onClick(final View view) {
                 new PublicIpTask()
                     .onFinish(new TaskBase.Consumer<String>() {
                         @Override
                         public void accept(String ip) {
                             if (ip != null) {
-                                new SnackBarTask(view1, ip).runOn(Threads.MAIN_LOOPER);
+                                new SnackBarTask(view, ip).runOn(Threads.MAIN_LOOPER);
                             }
                         }
                     })
